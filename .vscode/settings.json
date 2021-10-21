@@ -1,0 +1,17 @@
+{
+    "python.languageServer": "Pylance",
+    "python.analysis.autoSearchPaths": true,
+    "python.analysis.autoImportCompletions": true,
+    "code-runner.ignoreSelection": true,
+    "code-runner.runInTerminal": true,
+    "python.linting.mypyEnabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.testing.unittestEnabled": true,
+    "code-runner.executorMap": {
+        "python": "venv/bin/python",
+    },
+    "editor.formatOnSave": true,
+    "python.linting.flake8Args": [
+        "--max-line-length=160"
+    ]
+}
