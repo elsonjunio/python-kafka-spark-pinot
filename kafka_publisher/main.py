@@ -6,7 +6,7 @@ from time import sleep
 
 def run():
 
-    producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
+    producer = KafkaProducer(bootstrap_servers=['localhost:20092'],
                              value_serializer=lambda x:
                              dumps(x).encode('utf-8'))
 
@@ -41,7 +41,7 @@ def run():
             'synced_at': synced_at.strftime('%d/%m/%y %H:%M:%S')}
 
         # sleep(3)
-        producer.send('numtest', value=item)
+        producer.send('asdf', value=item)
 
     # producer.flush()
 
