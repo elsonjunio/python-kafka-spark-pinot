@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pinot
+  annotations:
+    kubernetes.io/ingress.class: traefik
+  labels:
+    syngenta.com: pinot
+
+spec:
+  rules:
+  - host: pinot.strider.ag
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: pinot
+            port:
+              number: 9000
