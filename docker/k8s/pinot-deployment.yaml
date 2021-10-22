@@ -13,8 +13,7 @@ spec:
   selector:
     matchLabels:
       io.kompose.service: pinot
-  strategy:
-    type: Recreate
+  strategy: {}
   template:
     metadata:
       annotations:
@@ -22,7 +21,6 @@ spec:
         kompose.version: 1.22.0 (955b78124)
       creationTimestamp: null
       labels:
-        io.kompose.network/pinot_bridge: "true"
         io.kompose.service: pinot
     spec:
       containers:
@@ -36,12 +34,5 @@ spec:
             - containerPort: 9000
             - containerPort: 8000
           resources: {}
-          volumeMounts:
-            - mountPath: /config
-              name: pinot-claim0
       restartPolicy: Always
-      volumes:
-        - name: pinot-claim0
-          persistentVolumeClaim:
-            claimName: pinot-claim0
 status: {}
