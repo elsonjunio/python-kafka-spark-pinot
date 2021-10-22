@@ -20,7 +20,3 @@ networks:
 # docker exec -it pinot bin/pinot-admin.sh AddTable \
 #   -tableConfigFile /config/table.json \
 #   -schemaFile /config/schema.json -exec
-
-docker exec -it pinot bin/pinot-admin.sh AddTable \
-  -tableConfigFile /config/table_1.json \
-  -schemaFile /config/schema_1.json -exec

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f pinot-docker-compose.yaml convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: pinot
+  name: pinot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: pinot
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f pinot-docker-compose.yaml convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/pinot_bridge: "true"
+        io.kompose.service: pinot
+    spec:
+      containers:
+        - args:
+            - QuickStart
+            - -type
+            - batch
+          image: apachepinot/pinot:0.7.1
+          name: pinot
+          ports:
+            - containerPort: 9000
+            - containerPort: 8000
+          resources: {}
+          volumeMounts:
+            - mountPath: /config
+              name: pinot-claim0
+      restartPolicy: Always
+      volumes:
+        - name: pinot-claim0
+          persistentVolumeClaim:
+            claimName: pinot-claim0
+status: {}
