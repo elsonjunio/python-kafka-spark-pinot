@@ -1,0 +1,29 @@
+{
+    "schemaName": "ex_v1_hf_log_json",
+    "dimensionFieldSpecs": [
+        {
+            "name": "printed_at",
+            "dataType": "STRING"
+        },
+        {
+            "name": "type",
+            "dataType": "STRING"
+        },
+        {
+            "name": "filename",
+            "dataType": "STRING"
+        },
+        {
+            "name": "text",
+            "dataType": "STRING"
+        }
+    ],
+    "dateTimeFieldSpecs": [
+        {
+            "name": "event_time",
+            "dataType": "STRING",
+            "format": "1:DAYS:SIMPLE_DATE_FORMAT:yyyy-MM-dd HH:mm:ss ZZZ",
+            "granularity": "1:DAYS"
+        }
+    ]
+}

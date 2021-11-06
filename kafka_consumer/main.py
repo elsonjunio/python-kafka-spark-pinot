@@ -5,7 +5,7 @@ from json import loads
 if __name__ == "__main__":
 
     consumer = KafkaConsumer(
-        'asdf',
+        'ex_v1_hf_log_json',
         bootstrap_servers=['localhost:20092'],
         auto_offset_reset='earliest',
         enable_auto_commit=True,

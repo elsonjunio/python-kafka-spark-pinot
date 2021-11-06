@@ -1,9 +1,0 @@
-version: '3.7'
-services:
-  pinot:
-    image: apachepinot/pinot:0.7.1
-    command: "QuickStart -type batch"
-    container_name: "pinot"
-    ports:
-      - "9000:9000"      
-      - "8000:8000"
