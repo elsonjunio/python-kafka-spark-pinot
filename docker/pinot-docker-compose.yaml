@@ -1,13 +1,14 @@
 version: '3.7'
 services:
   pinot:
-    image: apachepinot/pinot:0.7.1
-    command: "QuickStart -type batch"
+    image: apachepinot/pinot:latest-jdk11
+    command: "QuickStart -type hybrid"
     container_name: "pinot"
     ports:
       - "9000:9000"      
       - "8000:8000"
-
+    volumes:
+      - ./pinot-docker-demo/pinot/config:/config
 networks:
   default:
     external:

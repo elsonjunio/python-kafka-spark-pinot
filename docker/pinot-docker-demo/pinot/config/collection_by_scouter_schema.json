@@ -1,0 +1,40 @@
+{
+    "schemaName": "collection_by_scouter",
+    "dimensionFieldSpecs": [
+        {
+            "name": "collection_count",
+            "dataType": "LONG"
+        },
+        {
+            "name": "area_id",
+            "dataType": "STRING"
+        },
+        {
+            "name": "start_date",
+            "dataType": "STRING"
+        },
+        {
+            "name": "scouter_id",
+            "dataType": "STRING"
+        },
+        {
+            "name": "season_area_id",
+            "dataType": "STRING"
+        },
+        {
+            "name": "userWorkId",
+            "dataType": "STRING"
+        }
+    ],
+    "primaryKeyColumns": [
+        "userWorkId"
+    ],
+    "dateTimeFieldSpecs": [
+        {
+            "name": "updated_at",
+            "dataType": "STRING",
+            "format": "1:DAYS:SIMPLE_DATE_FORMAT:yyyy-MM-ddTHH:mm:ss.SSS-SS:SS",
+            "granularity": "1:DAYS"
+        }
+    ]
+}
