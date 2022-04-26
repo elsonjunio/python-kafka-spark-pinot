@@ -42,11 +42,4 @@ services:
       KAFKA_BROKERCONNECT: kafka:19092
 networks:
   default:
-    name: broker-kafka
-
-networks:
-  default:
-    external:
-      name: pinot_bridge
-
-# docker network create -d bridge pinot_bridge
+    name: pinot-kafka

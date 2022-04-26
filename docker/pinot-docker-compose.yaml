@@ -2,20 +2,16 @@ version: '3.7'
 services:
   pinot:
     image: apachepinot/pinot:latest-jdk11
+    networks:
+      - broker-kafka-pinot
     command: "QuickStart -type hybrid"
     container_name: "pinot"
     ports:
-      - "9000:9000"      
+      - "9000:9000"
       - "8000:8000"
     volumes:
       - ./pinot-docker-demo/pinot/config:/config
+
 networks:
-  default:
-    external:
-      name: pinot_bridge
-
-# docker network create -d bridge pinot_bridge
-
-# docker exec -it pinot bin/pinot-admin.sh AddTable \
-#   -tableConfigFile /config/table.json \
-#   -schemaFile /config/schema.json -exec
+  broker-kafka-pinot:
+    driver: bridge
