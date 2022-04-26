@@ -14,7 +14,7 @@ def run():
         reader = csv.DictReader(csvfile, delimiter=',')
 
         for row in reader:
-            producer.send('prd', value=row)
+            producer.send('prad', value=row)
 
     # producer.flush()
 

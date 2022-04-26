@@ -3,12 +3,12 @@ from pyspark import SparkConf
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
-from sch_reg import sch_prad
+from schema import schema_prad
 from os.path import abspath
 
 BOOTSTRAP_SERVERS = "localhost:9092"
-INPUT_MOVIES_TITLES_TOPIC = "prd"
-OUTPUT_MOVIES_TITLES_TOPIC = "prd2"
+INPUT_TOPIC = "prad"
+OUTPUT_TOPIC = "prad2"
 STARTING_OFFSETS = "latest"
 CHECKPOINT = "checkpoint"
 
@@ -18,7 +18,7 @@ warehouse_location = abspath('pyspark/warehouse/')
 
 spark = SparkSession \
     .builder \
-    .appName("myApp") \
+    .appName("readFromKafka") \
     .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1") \
     .config('spark.driver.extraClassPath', working_directory) \
     .config('spark.sal.warehouse.dir') \
@@ -29,21 +29,18 @@ spark.sparkContext.setLogLevel("WARN")
 
 jsonOptions = {"timestampFormat": "yyy-MM-dd'T'HH:mm:ss.sss'7'"}
 
-sch_prad = sch_prad
-
 stream_sch = spark \
     .readStream \
     .format("kafka") \
     .option("kafka.bootstrap.servers", BOOTSTRAP_SERVERS) \
-    .option("subscribe", INPUT_MOVIES_TITLES_TOPIC) \
+    .option("subscribe", INPUT_TOPIC) \
     .option("startingOffsets", STARTING_OFFSETS) \
     .option("checkpoint", CHECKPOINT) \
     .option("failOnDataLoss", "false") \
     .load() \
-    .select(from_json(col("value").cast("string"), sch_prad, jsonOptions).alias("schr"))
+    .select(from_json(col("value").cast("string"), schema_prad, jsonOptions).alias("schr"))
 
 stream_sch.printSchema()
-
 
 get_col_for_stream_sch = stream_sch.select(
     col("schr.ARR_DISTRICT").alias("ARR_DISTRICT"),
@@ -58,26 +55,25 @@ get_col_for_stream_sch = stream_sch.select(
     col("schr.CHARGE_TYPE_CD").alias("CHARGE_TYPE_CD")
 )
 
+
+def foreach_batch_function(df, epoch_id):
+    print("========= %s =========" % str(epoch_id))
+    print(f"{df.count()}")
+    df.show(100)
+
+
+# write_into_c = get_col_for_stream_sch \
+#    .select("ARR_DISTRICT", "ARR_BEAT", "ARR_YEAR", "ARR_MONTH", "RACE_CODE_CD", "FBI_CODE", "STATUTE", "STAT_DESCR", "CHARGE_CLASS_CD", "CHARGE_TYPE_CD") \
+#    .writeStream \
+#    .format("console") \
+#    .start()
+#
+# write_into_c.awaitTermination()
+
 write_into_c = get_col_for_stream_sch \
     .select("ARR_DISTRICT", "ARR_BEAT", "ARR_YEAR", "ARR_MONTH", "RACE_CODE_CD", "FBI_CODE", "STATUTE", "STAT_DESCR", "CHARGE_CLASS_CD", "CHARGE_TYPE_CD") \
     .writeStream \
-    .format("console") \
+    .foreachBatch(foreach_batch_function) \
     .start()
 
 write_into_c.awaitTermination()
-
-print(write_into_c)
-
-# write_into_c = get_col_for_stream_sch \
-#     .select("ARR_DISTRICT", "ARR_BEAT", "ARR_YEAR", "ARR_MONTH", "RACE_CODE_CD", "FBI_CODE", "STATUTE", "STAT_DESCR", "CHARGE_CLASS_CD", "CHARGE_TYPE_CD") \
-#     .select(to_json(struct(col("ARR_DISTRICT"), col("ARR_BEAT"), col("ARR_YEAR"), col("ARR_MONTH"), col("RACE_CODE_CD"), col("FBI_CODE"), col("STATUTE"), col("STAT_DESCR"), col("CHARGE_CLASS_CD"), col("CHARGE_TYPE_CD"))).alias("value")) \
-#     .writeStream \
-#     .format("kafka") \
-#     .option("kafka.bootstrap.servers", BOOTSTRAP_SERVERS) \
-#     .option("topic", OUTPUT_MOVIES_TITLES_TOPIC) \
-#     .option("checkpointLocation", CHECKPOINT) \
-#     .option("failOnDataLoss", "false") \
-#     .outputMode("append") \
-#     .start()
-#
-# write_into_c.awaitTermination()
