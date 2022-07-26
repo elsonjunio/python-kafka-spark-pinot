@@ -1,3 +1,4 @@
+import gzip
 from kafka import KafkaProducer
 from json import dumps
 from time import sleep
@@ -10,7 +11,7 @@ def run():
                              value_serializer=lambda x:
                              dumps(x).encode('utf-8'))
 
-    with open('PublicReleaseArrestDataUPDATE.csv', newline='') as csvfile:
+    with gzip.open('PublicReleaseArrestDataUPDATE.csv.gz', 'rt') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=',')
 
         for row in reader:

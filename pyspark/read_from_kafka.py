@@ -1,14 +1,11 @@
-from typing import Optional
-from pyspark import SparkConf
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import *
-from pyspark.sql.types import *
+from pyspark.sql.functions import from_json, col, to_json, struct
+# from pyspark.sql.types import *
 from schema import schema_prad
 from os.path import abspath
 
 BOOTSTRAP_SERVERS = "localhost:9092"
 INPUT_TOPIC = "prad"
-OUTPUT_TOPIC = "prad2"
 STARTING_OFFSETS = "latest"
 CHECKPOINT = "checkpoint"
 
@@ -61,14 +58,6 @@ def foreach_batch_function(df, epoch_id):
     print(f"{df.count()}")
     df.show(100)
 
-
-# write_into_c = get_col_for_stream_sch \
-#    .select("ARR_DISTRICT", "ARR_BEAT", "ARR_YEAR", "ARR_MONTH", "RACE_CODE_CD", "FBI_CODE", "STATUTE", "STAT_DESCR", "CHARGE_CLASS_CD", "CHARGE_TYPE_CD") \
-#    .writeStream \
-#    .format("console") \
-#    .start()
-#
-# write_into_c.awaitTermination()
 
 write_into_c = get_col_for_stream_sch \
     .select("ARR_DISTRICT", "ARR_BEAT", "ARR_YEAR", "ARR_MONTH", "RACE_CODE_CD", "FBI_CODE", "STATUTE", "STAT_DESCR", "CHARGE_CLASS_CD", "CHARGE_TYPE_CD") \

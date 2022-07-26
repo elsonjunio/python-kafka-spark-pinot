@@ -1,14 +1,12 @@
-from typing import Optional
-from pyspark import SparkConf
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import *
+from pyspark.sql.functions import from_json, col, to_json, struct
 from pyspark.sql.types import *
 from schema import schema_prad
 from os.path import abspath
 
 BOOTSTRAP_SERVERS = "localhost:9092"
 INPUT_TOPIC = "prad"
-OUTPUT_TOPIC = "prad2"
+OUTPUT_TOPIC = "arrest"
 STARTING_OFFSETS = "latest"
 CHECKPOINT = "checkpoint"
 

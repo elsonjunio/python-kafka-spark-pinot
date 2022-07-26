@@ -1,7 +1,0 @@
-docker exec -it pinot bin/pinot-admin.sh AddTable \
-  -tableConfigFile /config/collection_by_scouter_table.json \
-  -schemaFile /config/collection_by_scouter_schema.json -exec
-
-  docker exec -it pinot bin/pinot-admin.sh AddTable \
-  -tableConfigFile /config/a/table_1.json \
-  -schemaFile /config/a/schema_1.json -exec

@@ -1,20 +1,44 @@
 {
-    "schemaName": "ex_v1_hf_log_json",
+    "schemaName": "arrest_sch",
     "dimensionFieldSpecs": [
         {
-            "name": "printed_at",
+            "name": "ARR_DISTRICT",
             "dataType": "STRING"
         },
         {
-            "name": "type",
+            "name": "ARR_BEAT",
             "dataType": "STRING"
         },
         {
-            "name": "filename",
+            "name": "ARR_YEAR",
             "dataType": "STRING"
         },
         {
-            "name": "text",
+            "name": "ARR_MONTH",
+            "dataType": "STRING"
+        },
+        {
+            "name": "RACE_CODE_CD",
+            "dataType": "STRING"
+        },
+        {
+            "name": "FBI_CODE",
+            "dataType": "STRING"
+        },
+        {
+            "name": "STATUTE",
+            "dataType": "STRING"
+        },
+        {
+            "name": "STAT_DESCR",
+            "dataType": "STRING"
+        },
+        {
+            "name": "CHARGE_CLASS_CD",
+            "dataType": "STRING"
+        },
+        {
+            "name": "CHARGE_TYPE_CD",
             "dataType": "STRING"
         }
     ],
@@ -22,7 +46,7 @@
         {
             "name": "event_time",
             "dataType": "STRING",
-            "format": "1:DAYS:SIMPLE_DATE_FORMAT:yyyy-MM-ddTHH:mm:ss.SSS-SS:SS",
+            "format": "1:DAYS:SIMPLE_DATE_FORMAT:yyyy-MM-dd",
             "granularity": "1:DAYS"
         }
     ]
