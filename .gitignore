@@ -132,5 +132,5 @@ pyspark/jars
 
 checkpoint/
 
-pinot-docker-demo/kafka/
-pinot-docker-demo/zookeeper/
+kafka/
+zookeeper/
